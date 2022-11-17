@@ -7,4 +7,21 @@ public class IntegerWrapper {
         this.name = name;
         this.val = val;
     }
+    public void incrementVal(int inc){
+        this.val+=inc;
+    }
+    public boolean checkForOverflowGreater(){
+        if(val > 99999){
+            return true;
+        }
+        return false;
+    }
+    public boolean checkForOverflowLesser(){
+        if(val < -99999){
+            return true;
+        }
+        return false;
+    }
+
+
 }
