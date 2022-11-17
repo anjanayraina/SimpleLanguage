@@ -1,16 +1,19 @@
+import AllClasses.PredefinedFunctions;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
 public class RunnerClass {
+    static HashMap<String , String > map;
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        HashMap<String , String > map = new HashMap<>();
+        map = new HashMap<>();
         String operators = "+,-,*,/,#,~,>,>=,<,<=,==,!=,&&,||,!";
         HashSet<String> opMap = new HashSet<>();
-        for(String c : operators.split(",")){
-            opMap.add(c);
-        }
+        opMap.addAll(Arrays.asList(operators.split(",")));
+        PredefinedFunctions functions  = new PredefinedFunctions();
         while(true){
             String temp = s.nextLine();
             if(temp.equals("quit")){
@@ -28,7 +31,7 @@ public class RunnerClass {
                         continue;
                     }
 
-                    if(breaks[3].equals("int") || breaks[3].equals("bool")){
+                    if(breaks[2].equals("int") || breaks[2].equals("bool")){
                         map.put(breaks[1] , temp);
                     }
                     else
@@ -72,6 +75,14 @@ public class RunnerClass {
 
                 }
                 else if(breaks[0].equals("block")){
+                    if(breaks.length != 4){
+                        System.out.println("Please enter the right number of arguments");
+                        continue;
+                    }
+                    map.put(breaks[1] , temp);
+
+                }
+                else if(breaks[0].equals("while")){
                     if(breaks.length != 4){
                         System.out.println("Please enter the right number of arguments");
                         continue;
