@@ -7,12 +7,18 @@ import java.util.HashSet;
 public class PredefinedFunctions {
     HashMap<String , BooleanWrapper> boolMap;
     HashMap<String , IntegerWrapper> intMap;
+    HashMap<String  , PrintWrapper> printMap;
     String boolOperators = "+,-,*,/";
     String intOperators = ">,>=,<,<=,==,!=,&&,||,==,!=";
     HashSet<String> boolOpMap;
     HashSet<String> intOpMap;
 
+    public void invokePrint(String varname , String op){
+        if(intMap.containsKey(varname))printMap.put(varname , new PrintWrapper(varname , false , intMap.get(varname),null ));
+        else
+            printMap.put(varname , new PrintWrapper(varname , true ,null, boolMap.get(varname) ));
 
+    }
     public HashMap<String, BooleanWrapper> getBoolMap() {
         return boolMap;
     }
@@ -40,9 +46,36 @@ public class PredefinedFunctions {
 
     }
 
+    public void invokeIntBinary(String varname , String op1 , String op2 , String op){
+        if(op.equals("+")){
+            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)+ Integer.getInteger(op2)));
+        }
+        else if(op.equals("-")){
+            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)- Integer.getInteger(op2)));
+        }
+        else if(op.equals("*")){
+            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)*Integer.getInteger(op2)));
+        }
+        else if(op.equals("/")){
+            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)/Integer.getInteger(op2)));
+        }
+        else if(op.equals("%")){
+            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)%Integer.getInteger(op2)));
+        }
+    }
+
+    public void invokeBoolBinary(String varname , String op1 , String op2){
+
+    }
+
     public void invokeBinaryExperssions(String str){
         String temp[] = str.split(" ");
+        if(intOpMap.contains(temp[3])){
 
+        }
+        else{
+
+        }
 
     }
 
@@ -50,6 +83,7 @@ public class PredefinedFunctions {
     public PredefinedFunctions() {
         boolMap = new HashMap<>();
         intMap = new HashMap<>();
+        printMap  = new HashMap<>();
         boolOpMap = new HashSet<>();
         intOpMap  = new HashSet<>();
         intOpMap.addAll(Arrays.asList(intOperators.split(",")));

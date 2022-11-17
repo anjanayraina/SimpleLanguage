@@ -10,7 +10,7 @@ public class RunnerClass {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         map = new HashMap<>();
-        String operators = "+,-,*,/,#,~,>,>=,<,<=,==,!=,&&,||,!";
+        String operators = "+,-,*,/,>,>=,<,<=,==,!=,&&,||,!";
         HashSet<String> opMap = new HashSet<>();
         opMap.addAll(Arrays.asList(operators.split(",")));
         PredefinedFunctions functions  = new PredefinedFunctions();
