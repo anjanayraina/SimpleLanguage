@@ -24,7 +24,7 @@ public class IntegerWrapper {
     }
     @Override
     public String toString(){
-        return String.valueOf(this.val);
+        return String.valueOf(this.name + " " + this.val);
     }
 
 

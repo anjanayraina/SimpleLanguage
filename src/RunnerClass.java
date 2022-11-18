@@ -1,9 +1,6 @@
 import AllClasses.PredefinedFunctions;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 
 public class RunnerClass {
     static HashMap<String , String > map;
@@ -37,16 +34,15 @@ public class RunnerClass {
                     }
                     else
                         System.out.println("Please enter suitable operators!");
-                    System.out.println("Your variable has been added!!");
-
                     functions.invokeVardef(temp);
-
+//                    System.out.println("Your variable has been added!!");
                 }
                 else if(breaks[0].equals("b-expr")){
                     if(breaks.length != 5){
                         System.out.println("Please enter the right number of arguments");
                         continue;
                     }
+                    functions.invokeBinaryExperssions(temp);
                         map.put(breaks[1] , temp);
                 }
                 else if(breaks[0].equals("print")){
@@ -54,6 +50,7 @@ public class RunnerClass {
                         System.out.println("Please enter the right number of arguments");
                         continue;
                     }
+                    functions.invokePrint(breaks[1],breaks[2]);
                     map.put(breaks[1] , temp);
                 }
                 else if(breaks[0].equals("skip")){
@@ -62,6 +59,7 @@ public class RunnerClass {
                         continue;
                     }
                     map.put(breaks[1] , temp);
+                    functions.addSkip(breaks[1]);
                 }
                 else if(breaks[0].equals("if")){
                     if(breaks.length != 5){
@@ -69,6 +67,8 @@ public class RunnerClass {
                         continue;
                     }
                         map.put(breaks[1] , temp);
+                    functions.invokeIf(breaks[1] , breaks[3] ,breaks[2] , breaks[4] );
+
 
                 }
                 else if(breaks[0].equals("assign")){
@@ -77,6 +77,8 @@ public class RunnerClass {
                         continue;
                     }
                     map.put(breaks[1] , temp);
+                    functions.invokeAssign(breaks[1] , breaks[1] , breaks[2] , breaks[3]);
+
 
                 }
                 else if(breaks[0].equals("block")){
@@ -85,6 +87,12 @@ public class RunnerClass {
                         continue;
                     }
                     map.put(breaks[1] , temp);
+                    ArrayList<String> stats = new ArrayList<>();
+                    for(int i=2;i<breaks.length;i++){
+                        stats.add(breaks[i]);
+                    }
+
+                    functions.invokeBlock(breaks[1] , stats);
 
                 }
                 else if(breaks[0].equals("while")){
@@ -93,6 +101,7 @@ public class RunnerClass {
                         continue;
                     }
                     map.put(breaks[1] , temp);
+                    functions.createWhileLoop(breaks[1] , breaks[1] , breaks[2] , breaks[3]);
 
                 }
                 else if(breaks[0].equals("program")){
@@ -115,5 +124,9 @@ public class RunnerClass {
             }
         }
         functions.printAllInt();
+        functions.printAlBool();
+        //vardef vardef1 int x 0
+        //b-expr exp1 x % 2
+        //b-expr exp2 exp1 == 0
     }
 }
