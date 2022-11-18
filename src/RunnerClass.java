@@ -16,6 +16,7 @@ public class RunnerClass {
         PredefinedFunctions functions  = new PredefinedFunctions();
         while(true){
             String temp = s.nextLine();
+//            System.out.println(temp);
             if(temp.equals("quit")){
                 System.out.println("Quitting the Class!!");
                 break;
@@ -36,6 +37,10 @@ public class RunnerClass {
                     }
                     else
                         System.out.println("Please enter suitable operators!");
+                    System.out.println("Your variable has been added!!");
+
+                    functions.invokeVardef(temp);
+
                 }
                 else if(breaks[0].equals("b-expr")){
                     if(breaks.length != 5){
@@ -109,5 +114,6 @@ public class RunnerClass {
 
             }
         }
+        functions.printAllInt();
     }
 }

@@ -24,29 +24,15 @@ public class PredefinedFunctions {
             printMap.put(varname , new PrintWrapper(varname , true ,null, boolMap.get(varname) ));
 
     }
-    public HashMap<String, BooleanWrapper> getBoolMap() {
-        return boolMap;
-    }
 
-    public void setBoolMap(HashMap<String, BooleanWrapper> boolMap) {
-        this.boolMap = boolMap;
-    }
-
-    public HashMap<String, IntegerWrapper> getIntMap() {
-        return intMap;
-    }
-
-    public void setIntMap(HashMap<String, IntegerWrapper> intMap) {
-        this.intMap = intMap;
-    }
 
     public void invokeVardef(String varname){
         String temp[] = varname.split(" ");
         if(temp[2].equals("int")){
-            intMap.put(temp[2] , new IntegerWrapper(temp[2] , Integer.getInteger(temp[3])) );
+            intMap.put(temp[1] , new IntegerWrapper(temp[3] , Integer.parseInt(temp[4])) );
         }
         else{
-            boolMap.put(temp[2] , new BooleanWrapper(temp[2] , temp[3].equals("true")) );
+            boolMap.put(temp[1] , new BooleanWrapper(temp[3] , temp[4].equals("true")) );
         }
 
     }
@@ -134,6 +120,21 @@ public class PredefinedFunctions {
         }
         else
             System.out.println("Please enter a valid operator");
+    }
+
+    public void printAllInt(){
+
+        for(String i : intMap.keySet()){
+            System.out.println("going");
+            System.out.println(intMap.get(i));
+        }
+    }
+    public void printAlBool(){
+
+        for(String i : boolMap.keySet()){
+            System.out.println("going");
+            System.out.println(boolMap.get(i));
+        }
     }
     public void executeBlock(String varname){
         ArrayList<String> a = blockMap.get(varname).getStatements();

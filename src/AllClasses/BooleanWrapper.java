@@ -16,4 +16,8 @@ public class BooleanWrapper {
         this.name = name;
         this.val = val;
     }
+    @Override
+    public String toString(){
+        return String.valueOf(this.name + " " + this.val);
+    }
 }

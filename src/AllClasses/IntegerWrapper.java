@@ -22,6 +22,10 @@ public class IntegerWrapper {
         }
         return false;
     }
+    @Override
+    public String toString(){
+        return String.valueOf(this.val);
+    }
 
 
 }
