@@ -9,4 +9,7 @@ public class Block {
         this.blockName = blockName;
         this.statements  = statements;
     }
+    public ArrayList<String> getStatements(){
+        return this.statements;
+    }
 }

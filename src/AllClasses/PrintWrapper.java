@@ -13,9 +13,9 @@ public class PrintWrapper {
         this.boolVal = boolVal;
     }
     public void printVal(){
-        if(this.intVal!=null)System.out.printf("[%s]%n", this.intVal.val);
+        if(this.intVal!=null)System.out.printf("[%s]", this.intVal.val);
         else
-            System.out.printf("[%s]%n", this.boolVal.val);
+            System.out.printf("[%s]", this.boolVal.val);
 
     }
 }

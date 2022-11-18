@@ -90,6 +90,21 @@ public class RunnerClass {
                     map.put(breaks[1] , temp);
 
                 }
+                else if(breaks[0].equals("program")){
+                    if(breaks.length != 3){
+                        System.out.println("Please enter the right number of arguments");
+                        continue;
+                    }
+                    map.put(breaks[1] , temp);
+                }
+                else if(breaks[0].equals("execute")){
+                    if(breaks.length != 2){
+                        System.out.println("Please enter the right number of arguments");
+                        continue;
+                    }
+
+
+                }
 
 
             }

@@ -1,5 +1,6 @@
 package AllClasses;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +9,10 @@ public class PredefinedFunctions {
     HashMap<String , BooleanWrapper> boolMap;
     HashMap<String , IntegerWrapper> intMap;
     HashMap<String  , PrintWrapper> printMap;
+    HashMap<String , IfWrapper> ifMap;
+    HashMap<String , AssignWrapper> asisgnMap;
+    HashMap<String , Block> blockMap ;
+    HashMap<String , WhileLoop>whileLoopMap;
     String boolOperators = "+,-,*,/,%";
     String intOperators = ">,>=,<,<=,==,!=,&&,||,==,!=";
     HashSet<String> boolOpMap;
@@ -46,6 +51,21 @@ public class PredefinedFunctions {
 
     }
 
+    public void declareInt(String coverName , String varName , int val ){
+        intMap.put(coverName , new IntegerWrapper(varName ,val ));
+    }
+    public void declareBool(String coverName , String  varName , boolean val){
+        boolMap.put(coverName , new BooleanWrapper(varName , val));
+    }
+    public void assignBool(String varname){
+        AssignWrapper temp  = asisgnMap.get(varname);
+        boolMap.get(temp.left).val = boolMap.get(temp.right).val;
+    }
+    public void assignInt(String varname){
+        AssignWrapper temp  = asisgnMap.get(varname);
+        intMap.get(temp.left).val = intMap.get(temp.right).val;
+    }
+
     public void invokeIntBinary(String varname , String op1 , String op2 , String op){
         if(op.equals("+")){
             intMap.put(varname , new IntegerWrapper(varname , intMap.get(op1).val+ Integer.getInteger(op2)));
@@ -65,6 +85,26 @@ public class PredefinedFunctions {
         else
             System.out.println("Please enter a valid operator");
     }
+
+    public void updateIntBinary(String varname ,int val ,String op){
+        if(op.equals("+")){
+            intMap.get(varname).val+=val;
+        }
+        else if(op.equals("-")){
+            intMap.get(varname).val-=val;
+        }
+        else if(op.equals("*")){
+            intMap.get(varname).val*=val;
+        }
+        else if(op.equals("/")){
+            intMap.get(varname).val/=val;
+        }
+        else if(op.equals("%")){
+            intMap.get(varname).val%=val;
+        }
+    }
+
+
 
     public void invokeBoolBinary(String varname , String op1 , String op2 , String op){
 
@@ -95,6 +135,9 @@ public class PredefinedFunctions {
         else
             System.out.println("Please enter a valid operator");
     }
+    public void executeBlock(String varname){
+        ArrayList<String> a = blockMap.get(varname).getStatements();
+    }
 
     public void invokeBinaryExperssions(String str){
         String temp[] = str.split(" ");
@@ -108,10 +151,21 @@ public class PredefinedFunctions {
     }
 
 
+    public void invokeWhileLoop(String varname ){
+
+       WhileLoop loop = whileLoopMap.get(varname);
+       while(boolMap.get(loop.condition).val){
+           executeBlock(loop.block);
+       }
+
+    }
     public PredefinedFunctions() {
         boolMap = new HashMap<>();
         intMap = new HashMap<>();
         printMap  = new HashMap<>();
+        ifMap = new HashMap<>();
+        blockMap = new HashMap<>();
+        whileLoopMap = new HashMap<>();
         boolOpMap = new HashSet<>();
         intOpMap  = new HashSet<>();
         intOpMap.addAll(Arrays.asList(intOperators.split(",")));
