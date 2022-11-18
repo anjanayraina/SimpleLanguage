@@ -35,7 +35,7 @@ public class RunnerClass {
                     else
                         System.out.println("Please enter suitable operators!");
                     functions.invokeVardef(temp);
-//                    System.out.println("Your variable has been added!!");
+
                 }
                 else if(breaks[0].equals("b-expr")){
                     if(breaks.length != 5){
@@ -110,12 +110,14 @@ public class RunnerClass {
                         continue;
                     }
                     map.put(breaks[1] , temp);
+                    functions.createProgram(breaks[1] , breaks[2]);
                 }
                 else if(breaks[0].equals("execute")){
                     if(breaks.length != 2){
                         System.out.println("Please enter the right number of arguments");
                         continue;
                     }
+                    functions.executeProgram(breaks[1]);
 
 
                 }

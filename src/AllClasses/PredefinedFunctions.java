@@ -13,6 +13,7 @@ public class PredefinedFunctions {
     HashMap<String , AssignWrapper> asisgnMap;
     HashMap<String , Block> blockMap ;
     HashMap<String , WhileLoop>whileLoopMap;
+    HashMap<String , ProgramWrapper> programMap;
     String intOperators = "+,-,*,/,%";
     String boolOperators = ">,>=,<,<=,==,!=,&&,||,==,!=";
     HashSet<String> boolOpMap;
@@ -23,7 +24,13 @@ public class PredefinedFunctions {
         if(intMap.containsKey(varname))printMap.put(varname , new PrintWrapper(varname , false , intMap.get(varname),null ));
         else
             printMap.put(varname , new PrintWrapper(varname , true ,null, boolMap.get(varname) ));
+    }
 
+    public void printVal(String varname){
+//        String name =
+//        if(intMap.containsKey(varname)) System.out.println(printMap.get(varname).);
+//        else
+//
     }
 
 
@@ -150,9 +157,7 @@ public class PredefinedFunctions {
             System.out.println(boolMap.get(i));
         }
     }
-    public void executeBlock(String varname){
-        ArrayList<String> a = blockMap.get(varname).getStatements();
-    }
+
 // invokeIntBinary(String varname , String op1 , String op2 , String op)
     public void invokeBinaryExperssions(String str){
         String temp[] = str.split(" ");
@@ -191,12 +196,56 @@ public class PredefinedFunctions {
     public void addSkip(String name){
         skipSet.add(name);
     }
+    public void createProgram(String name , String block){
+        programMap.put(name , new ProgramWrapper(name , block));
+    }
+
+    public void executeBlock(String block){
+        Block b = blockMap.get(block);
+        ArrayList<String > tasks = b.getStatements();
+        for(String i : tasks){
+
+            if(printMap.containsKey(i)){
+                printMap.get(i).printVal();
+            }
+            else if(ifMap.containsKey(i)){
+
+            }
+            else if(blockMap.containsKey(i)){
+
+            }
+            else if(whileLoopMap.containsKey(i)){
+
+            }
+            else if(skipSet.contains(i)){
+
+            }
+            else if (asisgnMap.containsKey(i)) {
+                AssignWrapper assign = asisgnMap.get(i);
+                if(intMap.containsKey(assign.name)){
+                    assignInt(assign.name);
+                }
+                else{
+                    assignBool(assign.name);
+                }
+            }
+
+        }
+
+    }
+    public void executeProgram(String name ){
+        ProgramWrapper program = programMap.get(name);
+        executeBlock(program.block);
+
+    }
     public PredefinedFunctions() {
+        asisgnMap = new HashMap<>();
         boolMap = new HashMap<>();
         intMap = new HashMap<>();
         printMap  = new HashMap<>();
         ifMap = new HashMap<>();
         blockMap = new HashMap<>();
+        programMap = new HashMap<>();
         whileLoopMap = new HashMap<>();
         boolOpMap = new HashSet<>();
         intOpMap  = new HashSet<>();
