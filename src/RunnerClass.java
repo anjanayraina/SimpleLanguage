@@ -50,7 +50,7 @@ public class RunnerClass {
                         System.out.println("Please enter the right number of arguments");
                         continue;
                     }
-                    functions.invokePrint(breaks[1],breaks[2]);
+                    functions.invokePrint(breaks[1]);
                     map.put(breaks[1] , temp);
                 }
                 else if(breaks[0].equals("skip")){
@@ -125,8 +125,8 @@ public class RunnerClass {
 
             }
         }
-        functions.printAllInt();
-        functions.printAlBool();
+//        functions.printAllInt();
+//        functions.printAlBool();
         //vardef vardef1 int x 0
         //b-expr exp1 x % 2
         //b-expr exp2 exp1 == 0

@@ -20,7 +20,7 @@ public class PredefinedFunctions {
     HashSet<String> intOpMap;
     HashSet<String > skipSet;
 
-    public void invokePrint(String varname , String op){
+    public void invokePrint(String varname){
         if(intMap.containsKey(varname))printMap.put(varname , new PrintWrapper(varname , false , intMap.get(varname),null ));
         else
             printMap.put(varname , new PrintWrapper(varname , true ,null, boolMap.get(varname) ));
@@ -176,18 +176,34 @@ public class PredefinedFunctions {
         asisgnMap.put(varname , new AssignWrapper(name , left ,right));
 
     }
+    public void updateCondition(String condition  , String inc){
+        if(intMap.get(inc).val> 10){
+            boolMap.get(condition).val = false;
+        }
+    }
+
+    public void updateValue(String inc , int val){
+        intMap.get(inc).incrementVal(val);
+    }
 
     public void createWhileLoop(String varname , String name , String condition ,  String block ){
         whileLoopMap.put(varname , new WhileLoop(name , condition , block));
     }
-    public void invokeWhileLoop(String varname ){
 
-       WhileLoop loop = whileLoopMap.get(varname);
-       while(boolMap.get(loop.condition).val){
-           executeBlock(loop.block);
-       }
+    public void invokeWhileLoop(String varname  , String inc) {
 
+        WhileLoop loop = whileLoopMap.get(varname);
+        while (boolMap.get(loop.condition).val) {
+            if (IntegerWrapper.checkCondition(intMap.get(inc).val)) {
+                System.out.printf("[%s]", intMap.get(inc).val);
+            }
+            updateValue(inc , 1);
+            updateCondition(loop.condition , inc);
+
+        }
     }
+
+
     public void invokeBlock(String name , ArrayList<String> stats ){
         blockMap.put(name , new Block(name , stats));
     }
@@ -206,7 +222,7 @@ public class PredefinedFunctions {
     public void executeBlock(String block){
 //        System.out.println("Execute block has been called");
         Block b = blockMap.get(block);
-        System.out.println(b.blockName);
+//        System.out.println(b.blockName);
         ArrayList<String > tasks = b.getStatements();
         for(String i : tasks){
 
@@ -216,11 +232,11 @@ public class PredefinedFunctions {
             else if(ifMap.containsKey(i)){
 
             }
-            else if(blockMap.containsKey(i)){
-                executeBlock(blockMap.get(i).blockName);
-            }
+//            else if(blockMap.containsKey(i)){
+//                executeBlock(blockMap.get(i).blockName);
+//            }
             else if(whileLoopMap.containsKey(i)){
-                invokeWhileLoop(i);
+                invokeWhileLoop(i , "vardef1");
             }
             else if(skipSet.contains(i)){
                 continue;
@@ -231,7 +247,7 @@ public class PredefinedFunctions {
                     assignInt(assign.left , assign.right);
                 }
                 else{
-                    System.out.println(assign.name);
+//                    System.out.println(assign.name);
                     assignBool(assign.name);
 
                 }
@@ -241,7 +257,7 @@ public class PredefinedFunctions {
 
     }
     public void executeProgram(String name ){
-        System.out.println("Execute program called!!");
+//        System.out.println("Execute program called!!");
         ProgramWrapper program = programMap.get(name);
         executeBlock(program.block);
 

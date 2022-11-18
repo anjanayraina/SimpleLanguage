@@ -26,6 +26,9 @@ public class IntegerWrapper {
     public String toString(){
         return String.valueOf(this.name + " " + this.val);
     }
+    public static boolean checkCondition(int val){
+        return val%2==0;
+    }
 
 
 }
