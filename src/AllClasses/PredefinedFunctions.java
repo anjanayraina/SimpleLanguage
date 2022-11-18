@@ -8,7 +8,7 @@ public class PredefinedFunctions {
     HashMap<String , BooleanWrapper> boolMap;
     HashMap<String , IntegerWrapper> intMap;
     HashMap<String  , PrintWrapper> printMap;
-    String boolOperators = "+,-,*,/";
+    String boolOperators = "+,-,*,/,%";
     String intOperators = ">,>=,<,<=,==,!=,&&,||,==,!=";
     HashSet<String> boolOpMap;
     HashSet<String> intOpMap;
@@ -48,33 +48,61 @@ public class PredefinedFunctions {
 
     public void invokeIntBinary(String varname , String op1 , String op2 , String op){
         if(op.equals("+")){
-            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)+ Integer.getInteger(op2)));
+            intMap.put(varname , new IntegerWrapper(varname , intMap.get(op1).val+ Integer.getInteger(op2)));
         }
         else if(op.equals("-")){
-            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)- Integer.getInteger(op2)));
+            intMap.put(varname , new IntegerWrapper(varname , intMap.get(op1).val- Integer.getInteger(op2)));
         }
         else if(op.equals("*")){
-            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)*Integer.getInteger(op2)));
+            intMap.put(varname , new IntegerWrapper(varname , intMap.get(op1).val*Integer.getInteger(op2)));
         }
         else if(op.equals("/")){
-            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)/Integer.getInteger(op2)));
+            intMap.put(varname , new IntegerWrapper(varname , intMap.get(op1).val/Integer.getInteger(op2)));
         }
         else if(op.equals("%")){
-            intMap.put(varname , new IntegerWrapper(varname , Integer.getInteger(op1)%Integer.getInteger(op2)));
+            intMap.put(varname , new IntegerWrapper(varname , intMap.get(op1).val%Integer.getInteger(op2)));
         }
+        else
+            System.out.println("Please enter a valid operator");
     }
 
-    public void invokeBoolBinary(String varname , String op1 , String op2){
+    public void invokeBoolBinary(String varname , String op1 , String op2 , String op){
 
+        if(op.equals(">")){
+            boolMap.put(varname , new BooleanWrapper(varname , intMap.get(op1).val> Integer.getInteger(op2)));
+        }
+        else if(op.equals(">=")){
+            boolMap.put(varname , new BooleanWrapper(varname , intMap.get(op1).val>= Integer.getInteger(op2)));
+        }
+        else if(op.equals("<")){
+            boolMap.put(varname , new BooleanWrapper(varname , intMap.get(op1).val< Integer.getInteger(op2)));
+        }
+        else if(op.equals("<=")){
+            boolMap.put(varname , new BooleanWrapper(varname , intMap.get(op1).val<= Integer.getInteger(op2)));
+        }
+        else if(op.equals("==")){
+            boolMap.put(varname , new BooleanWrapper(varname , intMap.get(op1).val== Integer.getInteger(op2)));
+        }
+        else if(op.equals("!=")){
+            boolMap.put(varname , new BooleanWrapper(varname , intMap.get(op1).val!= Integer.getInteger(op2)));
+        }
+        else if(op.equals("&&")){
+            boolMap.put(varname , new BooleanWrapper(varname , boolMap.get(op1).val && boolMap.get(op2).val));
+        }
+        else if(op.equals("||")){
+            boolMap.put(varname , new BooleanWrapper(varname , boolMap.get(op1).val || boolMap.get(op2).val));
+        }
+        else
+            System.out.println("Please enter a valid operator");
     }
 
     public void invokeBinaryExperssions(String str){
         String temp[] = str.split(" ");
         if(intOpMap.contains(temp[3])){
-
+            invokeIntBinary(temp[1] , temp[2] , temp[4] , temp[3]);
         }
         else{
-
+            invokeBoolBinary(temp[1] , temp[2] , temp[4] , temp[3]);
         }
 
     }
