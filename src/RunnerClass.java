@@ -66,7 +66,7 @@ public class RunnerClass {
                         System.out.println("Please enter the right number of arguments");
                         continue;
                     }
-                        map.put(breaks[1] , temp);
+                    map.put(breaks[1] , temp);
                     functions.invokeIf(breaks[1] , breaks[3] ,breaks[2] , breaks[4] );
 
 

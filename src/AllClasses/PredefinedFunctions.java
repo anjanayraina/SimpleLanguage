@@ -27,10 +27,7 @@ public class PredefinedFunctions {
     }
 
     public void printVal(String varname){
-//        String name =
-//        if(intMap.containsKey(varname)) System.out.println(printMap.get(varname).);
-//        else
-//
+        printMap.get(varname).printVal();
     }
 
 
@@ -67,9 +64,11 @@ public class PredefinedFunctions {
         AssignWrapper temp  = asisgnMap.get(varname);
         boolMap.get(temp.left).val = boolMap.get(temp.right).val;
     }
-    public void assignInt(String varname){
-        AssignWrapper temp  = asisgnMap.get(varname);
-        intMap.get(temp.left).val = intMap.get(temp.right).val;
+    public void assignInt(String left , String right){
+        IntegerWrapper temp = findIntegerByName(left);
+        IntegerWrapper tempRight = findIntegerByName(right);
+
+        temp.val = intMap.get(right).val;
     }
 
     public void invokeIntBinary(String varname , String op1 , String op2 , String op){
@@ -200,8 +199,14 @@ public class PredefinedFunctions {
         programMap.put(name , new ProgramWrapper(name , block));
     }
 
+    public void executeIf(String name){
+
+    }
+
     public void executeBlock(String block){
+//        System.out.println("Execute block has been called");
         Block b = blockMap.get(block);
+        System.out.println(b.blockName);
         ArrayList<String > tasks = b.getStatements();
         for(String i : tasks){
 
@@ -212,21 +217,23 @@ public class PredefinedFunctions {
 
             }
             else if(blockMap.containsKey(i)){
-
+                executeBlock(blockMap.get(i).blockName);
             }
             else if(whileLoopMap.containsKey(i)){
-
+                invokeWhileLoop(i);
             }
             else if(skipSet.contains(i)){
-
+                continue;
             }
             else if (asisgnMap.containsKey(i)) {
                 AssignWrapper assign = asisgnMap.get(i);
-                if(intMap.containsKey(assign.name)){
-                    assignInt(assign.name);
+                if(intMap.containsKey(assign.left)  || intMap.containsKey(assign.right)){
+                    assignInt(assign.left , assign.right);
                 }
                 else{
+                    System.out.println(assign.name);
                     assignBool(assign.name);
+
                 }
             }
 
@@ -234,6 +241,7 @@ public class PredefinedFunctions {
 
     }
     public void executeProgram(String name ){
+        System.out.println("Execute program called!!");
         ProgramWrapper program = programMap.get(name);
         executeBlock(program.block);
 
